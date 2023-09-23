@@ -252,6 +252,17 @@ public class CommonMethods extends BaseClass{
 	public static WebElement waitForVisibility(WebElement element) {
 		return getWaitObject().until(ExpectedConditions.visibilityOf(element));
 	}
+	
+	
+	/**
+	 * This method waits for an element to be clickable and then clicks it.
+	 * @param element
+	 */
+	public static void click(WebElement element)
+	{
+		waitForClickability(element);
+		element.click();
+	}
 
 }
 	
