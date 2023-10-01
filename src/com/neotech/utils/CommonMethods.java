@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchFrameException;
 import org.openqa.selenium.WebElement;
@@ -262,6 +263,89 @@ public class CommonMethods extends BaseClass{
 	{
 		waitForClickability(element);
 		element.click();
+	}
+	
+	/**
+	 * This method will cast the driver to a JavascriptExecutor object and return it.
+	 * 
+	 * @return
+	 */
+	public static JavascriptExecutor getJSObject()
+	{
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		return js;
+		//in one line 
+		//return (JavascriptExecutor) driver;
+	}
+	
+	/**
+	 * This method will click on an element using JavascriptExecutor
+	 * 
+	 * @param element
+	 */
+	public static void jsClick(WebElement element)
+	{
+		getJSObject().executeScript("arguments[0].click()", element);
+	}
+	
+	
+	/**
+	 * This method will scroll the page until a specific element is in view.
+	 * 
+	 * @param element
+	 */
+	public static void scrollToElement(WebElement element)
+	{
+		getJSObject().executeScript("arguments[0].scrollIntoView(true)", element);
+	}
+	
+	
+	/**
+	 * This method scrolls the page up based on the pixel parameter.
+	 * 
+	 * @param pixel
+	 */
+	public static void  scrollUp(int pixel)
+	{
+		getJSObject().executeScript("window.scrollBy(0, -"+pixel+")");
+	}
+	
+	/**
+	 * This method scrolls the page down based on the pixel parameter.
+	 * 
+	 * @param pixel
+	 */
+	public static void scrollDown(int pixel)
+	{
+		getJSObject().executeScript("window.scrollBy(0,"+pixel+")");
+	}
+	
+	/**
+	 * This method selects a date from the calendar given the List<WebElement> and the
+	 * date to select
+	 * 
+	 * @param elements
+	 * @param date
+	 */
+	public static void selectCalendarDate(List<WebElement> elements, String date)
+	{
+		for (WebElement day : elements)
+		{
+			if (day.getText().equals(date))
+			{
+				if (day.isEnabled())
+				{
+					day.click();
+					break;
+				}
+				else
+				{
+					System.out.println("This day is not enabled!");
+					break;
+				}
+					
+			}
+		}
 	}
 
 }
